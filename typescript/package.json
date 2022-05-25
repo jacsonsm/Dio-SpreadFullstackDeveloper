@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jacsonsm",
   "license": "MIT",
   "dependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel-bundler": "^1.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4"
   }
 }
