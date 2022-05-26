@@ -1,12 +1,17 @@
 interface Cachorro {
-readonly  nome:string;
-readonly  idade:number;
-readonly  parqueFavorito?: string;
+  nome:string;
+  idade:number;
+  parqueFavorito?: string;
 }
 
-class MeuCachorro implements Cachorro {
+type CachorroSomenteLeitura = {
+  +readonly [K in keyof Cachorro] -?: Cachorro[K];
+}
+
+class MeuCachorro implements CachorroSomenteLeitura {
   idade;
   nome;
+  parqueFavorito;
 
   constructor(nome, idade) {
     this.nome = nome;
