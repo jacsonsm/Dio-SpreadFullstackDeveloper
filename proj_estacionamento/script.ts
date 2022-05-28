@@ -1,13 +1,30 @@
 interface Veiculo{
-  nome:String;
-  placa:String;
-  entrada: Date;
+  nome: string;
+  placa: string;
+  entrada: Date | string;
+  clientId?: string;
 }
-  
+
+interface Pessoa {
+  nome: string;
+  cpf: string;
+
+}
+interface Cliente{
+  veiculos:Veiculo[];
+}
+
 
 (function() {
   const $ = (query:string): HTMLInputElement | null =>
     document.querySelector(query);
+
+    function calcTempo(mil:number){
+      const min = Math.floor(mil / 60000);
+      const sec = Math.floor((mil % 60000) / 1000);
+      
+      return `${min}m e ${sec}s`;
+    }
 
   function patio() {
     function ler(): Veiculo[] {
@@ -18,7 +35,7 @@ interface Veiculo{
       localStorage.setItem("patio", JSON.stringify(veiculos));
     };
 
-    function adicionar(veiculo:Veiculo, salva?: boolean) {
+    function adicionar(veiculo: Veiculo & {cupom?:string }, salva?: boolean) {
       const row = document.createElement("tr");
 
       row.innerHTML = `
@@ -29,13 +46,25 @@ interface Veiculo{
         <button class="delete" data-placa="${veiculo.placa}">X</button>
       </td>
       `;
-
+      row.querySelector(".delete")?.addEventListener("click", function(){
+        remover(this.dataset.placa);
+      });
+      
       $("#patio")?.appendChild(row);
 
       if (salva) salvar([...ler(), veiculo]);
     };
     
-    function remover() {};
+    function remover(placa:string) {
+      const {entrada, nome} = ler().find(veiculo => veiculo.placa ==placa);
+
+      const tempo = calcTempo(new Date().getTime() - new Date (entrada).getTime());
+
+      if (!confirm(`O veiculo ${nome} permaneceu por ${tempo}. Deseja encerrar?`)) return; 
+        //new Date().getTime() - entrada.getTime()
+      salvar(ler().filter((veiculo) => veiculo.placa !==placa));
+      render();
+    };
     
     function render() {
       $("#patio")!.innerHTML = "";
@@ -60,6 +89,6 @@ interface Veiculo{
       return;
     }
 
-    patio().adicionar({nome, placa, entrada: new Date()}, true);
+    patio().adicionar({nome, placa, entrada: new Date().toISOString()}, true);
   });
 }) ();
