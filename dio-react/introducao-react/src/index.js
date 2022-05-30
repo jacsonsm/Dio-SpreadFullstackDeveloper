@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Button from './Button';
 import './index.css';
 //import App from './App';
 //import reportWebVitals from './reportWebVitals';
@@ -15,17 +16,54 @@ import './index.css';
 // // to log results (for example: reportWebVitals(console.log))
 // // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 // reportWebVitals();
+// class Appp extends Component {
+//   constructor(props) {
+//     super(props)
+//     this.state = {
+//       clock: 1000,
+//       copo: 'agua'
+//     }
+//   }
+//   alterarCopo = () => {
+//     this.setState({
+//       copo: 'refrigerante'
+//     })
+//     //this.state.copo = 'refrigerante'
+//   }
+//   render() {
+//     const { clock, copo } = this.state
+//     return (
+//       <div>
+//         <h2>{clock}</h2>
+//         <button onClick={() => this.alterarCopo()}>{copo}</button>
+//       </div>
+//     )
+//   }
+// }
+const element = <h1>'Digital Innovation'</h1>
+const element2 = <h2>Teste renderizando elementos</h2>
 
 function sum(a, b) {
-  return a + b
+  //return a + b
+  alert(a + b)
 }
 
 function primeiroJSX() {
   return (
     <div className='teste'>
-      Jacson Medeiros -Instrodução ao React
+      Instrodução ao React
+      {/*  */}
       <h1>Soma: {sum(10, 20)}</h1>
+
+      <div>
+        {element}
+        {element2}
+      </div>
+      <h2><Button onClick={() => sum(10, 20)} name="teste soma" /></h2>
+
+
     </div>
+
   )
 }
 
@@ -33,7 +71,6 @@ function primeiroJSX() {
 const App = () => {
   return (
     <div className="App">
-
       {primeiroJSX()}
     </div>
   )
